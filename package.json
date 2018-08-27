@@ -1,0 +1,20 @@
+{
+  "name": "ts-data-structures",
+  "version": "1.0.0",
+  "description": "Data structures built with Type Script https://rattanakchea.github.io/ts-data-structures",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rattanakchea/ts-data-structures.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rattanakchea/ts-data-structures/issues"
+  },
+  "homepage": "https://github.com/rattanakchea/ts-data-structures#readme"
+}
