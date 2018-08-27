@@ -4,6 +4,7 @@
   "description": "Data structures built with Type Script https://rattanakchea.github.io/ts-data-structures",
   "main": "index.js",
   "scripts": {
+    "server": "serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,10 +12,19 @@
     "url": "git+https://github.com/rattanakchea/ts-data-structures.git"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Rattanak Chea",
+    "email": "rattanak.chea@gmail.com"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rattanakchea/ts-data-structures/issues"
   },
-  "homepage": "https://github.com/rattanakchea/ts-data-structures#readme"
+  "homepage": "https://github.com/rattanakchea/ts-data-structures#readme",
+  "devDependencies": {
+    "serve": "^10.0.0",
+    "ts-node": "^7.0.1",
+    "typedoc": "^0.12.0",
+    "typescript": "^3.0.1"
+  }
 }
