@@ -20,9 +20,11 @@
   "scripts": {
     "server": "serve docs",
     "docs": "typedoc src/ --target ES6 --mode file --exclude \"**/*.spec.ts\" --out docs",
+    "deploy": "npm run docs && gh-pages -d docs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "gh-pages": "^1.2.0",
     "serve": "^10.0.0",
     "ts-node": "^7.0.1",
     "typedoc": "^0.12.0",
