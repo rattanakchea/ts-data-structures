@@ -32,3 +32,7 @@ test("reverse linked list", () => {
   list2.reverse();
   expect(list2 + "").toEqual("4->3->2->1->null");
 });
+
+test("contains: should check if list contains specific data", () => {
+  expect(list2.contains(2)).toEqual(true);
+});

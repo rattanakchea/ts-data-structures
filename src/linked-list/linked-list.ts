@@ -91,4 +91,16 @@ export class LinkedList<T> {
 
     this.head = previousNode;
   }
+
+  // contains
+  contains(data: T): boolean {
+    let currentNode = this.head;
+
+    while (currentNode) {
+      if (currentNode.data === data) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
