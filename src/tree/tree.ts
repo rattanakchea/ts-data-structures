@@ -9,61 +9,42 @@ export class BinaryTree<T> {
   constructor(data: any) {
     if (Array.isArray(data)) {
       this.root = new TreeNode(data.shift()); //add first element
-      data.forEach((item: T) => this.insert(item));
+      data.forEach((item: T) => this.add(item));
     } else {
       this.root = new TreeNode(data);
     }
   }
 
   // insert a single item into the tree
-  insert(item: T) {
+  add(item: T) {
     // console.log("inserting: ", item);
 
-    this.insertHelper(item, this.root);
+    this.addHelper(this.root, item);
   }
 
-  insertHelper(item: T, node: TreeNode<T>) {
-    console.log("before: ", node);
-
+  addHelper(node: TreeNode<T>, item: T) {
     if (!node) {
       node = new TreeNode(item);
-      console.log("root: ", this.root);
-      console.log("------");
+    } else if (node.data > item) {
+      node.left = this.addHelper(node.left, item);
+    } else if (node.data < item) {
+      node.right = this.addHelper(node.right, item);
+    }
+    // ignore duplicate data
+    return node;
+  }
 
+  printInOrder(): void {
+    return this.printInOrderHelper(this.root);
+  }
+
+  printInOrderHelper(node: TreeNode<T>): void {
+    if (node == null) {
       return;
     }
-    // this.root is not null
-    if (node.data > item) {
-      // js does not pass by reference in object when null
-      if (node.left) {
-        this.insertHelper(item, node.left);
-      } else {
-        node.left = new TreeNode(item);
-      }
-    } else {
-      if (node.right) {
-        this.insertHelper(item, node.right);
-      } else {
-        node.right = new TreeNode(item);
-      }
-    }
-  }
-
-  printInOrder(): String {
-    return this.printInOrderHelper(this.root, "");
-  }
-
-  printInOrderHelper(node: TreeNode<T>, str: String): String {
-    if (node == null) {
-      return "";
-    }
-    str += this.printInOrderHelper(node.left, str) + "";
-    str += node.data + " ";
-    // console.log(node.data);
-
-    str += this.printInOrderHelper(node.right, str) + "";
-
-    return str;
+    this.printInOrderHelper(node.left);
+    process.stdout.write(node.data + ", ");
+    this.printInOrderHelper(node.right);
   }
 
   // generate random tree
