@@ -7,7 +7,7 @@ export class LinkedList<T> {
   private head: ListNode<T> = null;
   private tail: ListNode<T> = null;
 
-  constructor(data?: T) {
+  constructor(data?: any) {
     // array
     if (data instanceof Array) {
       this.constructor_from_array(data);
@@ -100,6 +100,7 @@ export class LinkedList<T> {
       if (currentNode.data === data) {
         return true;
       }
+      currentNode = currentNode.next;
     }
     return false;
   }

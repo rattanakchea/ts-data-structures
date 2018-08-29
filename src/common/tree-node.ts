@@ -1,12 +1,12 @@
 // TreeNode
 export class TreeNode<T> {
-  data: number;
+  data: T;
   left: TreeNode<T>;
   right: TreeNode<T>;
 
-  constructor(data: number, left: TreeNode<T>, right: TreeNode<T>) {
+  constructor(data: T) {
     this.data = data;
-    this.left = left;
-    this.right = right;
+    this.left = null;
+    this.right = null;
   }
 }

@@ -1,11 +1,11 @@
 import { LinkedList } from "./linked-list";
 
 let list: LinkedList<String>;
-let list2: LinkedList<number[]>;
-let arr: number[] = [1, 2, 3, 4];
+let list2: LinkedList<Number>;
+let arr: Number[] = [1, 2, 3, 4];
 
 beforeEach(() => {
-  list = new LinkedList<string>();
+  list = new LinkedList();
   list2 = new LinkedList(arr);
 });
 
@@ -35,4 +35,8 @@ test("reverse linked list", () => {
 
 test("contains: should check if list contains specific data", () => {
   expect(list2.contains(2)).toEqual(true);
+});
+
+test("contains: should check if list not contains specific data", () => {
+  expect(list2.contains(5)).toEqual(false);
 });
