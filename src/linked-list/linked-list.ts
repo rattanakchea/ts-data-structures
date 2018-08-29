@@ -7,22 +7,28 @@ export class LinkedList<T> {
   private head: ListNode<T> = null;
   private tail: ListNode<T> = null;
 
-  constructor(data = null) {
-    // number or string
-    if (typeof data !== "object") {
-      this.head = new ListNode(data);
-      this.tail = this.head;
-      return;
+  constructor(data?: T) {
+    // array
+    if (data instanceof Array) {
+      this.constructor_from_array(data);
+    } else if (typeof data !== "undefined") {
+      // number or string
+      this.constructor_default(data);
     }
 
-    // array
-    if (typeof data == "object") {
-      this.head = new ListNode(data[0]);
-      this.tail = this.head;
+    // null, undefined
+  }
 
-      for (let i = 1; i < data.length; i++) {
-        this.add(data[i]);
-      }
+  private constructor_default(data: T) {
+    this.head = new ListNode(data);
+    this.tail = this.head;
+  }
+
+  private constructor_from_array(data: T[]) {
+    this.head = new ListNode(data[0]);
+    this.tail = this.head;
+    for (let i = 1; i < data.length; i++) {
+      this.add(data[i]);
     }
   }
 
@@ -43,7 +49,7 @@ export class LinkedList<T> {
     return result;
   }
 
-  toArray(): number[] {
+  toArray(): T[] {
     let current: ListNode<T> = this.head;
     let result = [];
     while (current) {
@@ -60,7 +66,29 @@ export class LinkedList<T> {
       size++;
       currentNode = currentNode.next;
     }
-
     return size;
+  }
+
+  // reverse in place
+  reverse(): void {
+    let currentNode = this.head;
+    let previousNode = null;
+    let nextNode = null;
+
+    // Until we have 'fallen off' the end of the list
+    while (currentNode) {
+      // Copy a pointer to the next element
+      // before we overwrite currentNode.next
+      nextNode = currentNode.next;
+
+      // Reverse the 'next' pointer
+      currentNode.next = previousNode;
+
+      // Step forward in the list
+      previousNode = currentNode;
+      currentNode = nextNode;
+    }
+
+    this.head = previousNode;
   }
 }
