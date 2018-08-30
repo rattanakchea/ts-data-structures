@@ -21,7 +21,7 @@
     "server": "serve docs",
     "docs": "typedoc src/ --target ES6 --mode file --exclude \"**/*.spec.ts\" --out docs",
     "deploy": "npm run docs && gh-pages -d docs",
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",

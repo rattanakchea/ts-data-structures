@@ -34,15 +34,34 @@ export class BinaryTree<T> {
     return node;
   }
 
-  printInOrder(): void {
-    return this.printInOrderHelper(this.root);
+  printInOrder(): T[] {
+    let result: T[] = [];
+    this.printInOrderHelper(this.root, result);
+    return result;
   }
 
-  printInOrderHelper(node: TreeNode<T>): void {
+  printInOrderHelper(node: TreeNode<T>, result: T[]): void {
     if (node != null) {
-      this.printInOrderHelper(node.left);
+      this.printInOrderHelper(node.left, result);
+      this.visit(node, result);
+      this.printInOrderHelper(node.right, result);
+    }
+  }
+
+  private visit(node: TreeNode<T>, result: T[]): void {
+    process.stdout.write(node.data + ", ");
+    result.push(node.data);
+  }
+
+  printPostOrder(): void {
+    return this.printPostOrderHelper(this.root);
+  }
+
+  printPostOrderHelper(node: TreeNode<T>): void {
+    if (node != null) {
+      this.printPostOrderHelper(node.left);
+      this.printPostOrderHelper(node.right);
       process.stdout.write(node.data + ", ");
-      this.printInOrderHelper(node.right);
     }
   }
 
@@ -60,6 +79,13 @@ export class BinaryTree<T> {
       this.printSidewaysHelper(root.left, level + 1);
     }
   }
+
+  // print tree leve-by-level. BFS ?
+  printTree(): void {
+    return this.printTreeHelper(this.root, 0);
+  }
+
+  printTreeHelper(root: TreeNode<T>, level: number): void {}
 
   // generate random tree
   random() {}
