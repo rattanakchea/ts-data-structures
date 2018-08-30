@@ -39,12 +39,26 @@ export class BinaryTree<T> {
   }
 
   printInOrderHelper(node: TreeNode<T>): void {
-    if (node == null) {
-      return;
+    if (node != null) {
+      this.printInOrderHelper(node.left);
+      process.stdout.write(node.data + ", ");
+      this.printInOrderHelper(node.right);
     }
-    this.printInOrderHelper(node.left);
-    process.stdout.write(node.data + ", ");
-    this.printInOrderHelper(node.right);
+  }
+
+  printSideways(): void {
+    return this.printSidewaysHelper(this.root, 0);
+  }
+
+  printSidewaysHelper(root: TreeNode<T>, level: number): void {
+    if (root != null) {
+      this.printSidewaysHelper(root.right, level + 1);
+      for (let i = 0; i <= level; i++) {
+        process.stdout.write("   ");
+      }
+      process.stdout.write(root.data + "\n");
+      this.printSidewaysHelper(root.left, level + 1);
+    }
   }
 
   // generate random tree
@@ -52,6 +66,21 @@ export class BinaryTree<T> {
 
   // contains
   contains(data: T): boolean {
-    return false;
+    return this.containsHelper(this.root, data);
+  }
+
+  // contains helper
+  private containsHelper(root: TreeNode<T>, data: T): boolean {
+    if (root == null) {
+      return false;
+    }
+
+    if (root.data == data) return true;
+    // go left
+    if (root.data > data) {
+      return this.containsHelper(root.left, data);
+    }
+    // go right
+    return this.containsHelper(root.right, data);
   }
 }
