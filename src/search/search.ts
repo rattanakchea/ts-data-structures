@@ -7,38 +7,51 @@ import { TreeNode } from "../common/tree-node";
 // for each children
 //    dfs(Left subtree)
 //    dfs(Right subtree)
-function dfs_tree<T>(root: TreeNode<T>, value: T) {
+function dfs_tree_recursive<T>(root: TreeNode<T>, value: T) {
   if (root) {
     // in tree, each will never be visited more than once
     visit(root.data, value);
     // for each children
-    dfs_tree(root.left, value);
-    dfs_tree(root.right, value);
+    dfs_tree_recursive(root.left, value);
+    dfs_tree_recursive(root.right, value);
   }
 }
-
-function Stack() {}
 
 // in iterative, we use a stack
 function dfs_tree_iterative<T>(root: TreeNode<T>, value: T) {
   if (!root) return;
   let stack = [];
-  stack.push(root.data);
+  stack.push(root);
 
   while (stack.length > 0) {
-    let d = stack.pop();
-    visit(d, value);
-    if (root.left) stack.push(root.left.data);
-    if (root.right) stack.push(root.right.data);
+    let node = stack.pop();
+    visit(node.data, value);
+    if (node.right) stack.push(node.right);
+    if (node.left) stack.push(node.left);
   }
 }
 
 function visit<T>(data: T, value: T) {
-  console.log("visit:", data);
+  process.stdout.write(data + ", ");
+  // console.log("visit:", data);
   if (data == value) {
-    console.log("found value in tree:", data);
+    // console.log("found value in tree:", data);
+    return true;
   }
-  // process.stdout.write(data + ", ");
 }
 
-export { dfs_tree, dfs_tree_iterative };
+// BFS in iterative, we use a queue
+function bfs_tree_iterative<T>(root: TreeNode<T>, value: T) {
+  if (!root) return;
+  let queue = [];
+  queue.push(root);
+
+  while (queue.length > 0) {
+    let node = queue.shift(); //remove first element
+    visit(node.data, value);
+    if (node.left) queue.push(node.right);
+    if (node.right) queue.push(node.left);
+  }
+}
+
+export { dfs_tree_recursive, dfs_tree_iterative, bfs_tree_iterative };
