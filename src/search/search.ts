@@ -1,5 +1,6 @@
 import { BinaryTree } from "../tree/tree";
 import { TreeNode } from "../common/tree-node";
+import { Stack } from "../stack/stack";
 
 // similar to pre-order traversal, recursive
 // pseudocode
@@ -20,10 +21,10 @@ function dfs_tree_recursive<T>(root: TreeNode<T>, value: T) {
 // in iterative, we use a stack
 function dfs_tree_iterative<T>(root: TreeNode<T>, value: T) {
   if (!root) return;
-  let stack = [];
+  let stack = new Stack<TreeNode<T>>();
   stack.push(root);
 
-  while (stack.length > 0) {
+  while (stack.size() > 0) {
     let node = stack.pop();
     visit(node.data, value);
     if (node.right) stack.push(node.right);
@@ -42,15 +43,20 @@ function visit<T>(data: T, value: T) {
 
 // BFS in iterative, we use a queue
 function bfs_tree_iterative<T>(root: TreeNode<T>, value: T) {
-  if (!root) return;
+  if (root == null) return;
   let queue = [];
   queue.push(root);
 
   while (queue.length > 0) {
+    // console.log("queue is:  ", queue);
+
     let node = queue.shift(); //remove first element
+    // console.log("----");
+    // console.log(node);
+
     visit(node.data, value);
-    if (node.left) queue.push(node.right);
-    if (node.right) queue.push(node.left);
+    if (node.left) queue.push(node.left);
+    if (node.right) queue.push(node.right);
   }
 }
 

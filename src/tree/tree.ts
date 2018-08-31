@@ -1,5 +1,4 @@
 import { TreeNode } from "../common/tree-node";
-
 /**
  * Singly Linked List
  */
@@ -120,5 +119,10 @@ export class BinaryTree<T> {
     }
     // go right
     return this.containsHelper(root.right, data);
+  }
+
+  //todo: find height of a tree
+  height(): number {
+    return 0;
   }
 }

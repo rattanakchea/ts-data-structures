@@ -23,7 +23,7 @@ console.log("---dfs tree recursive-----");
 Search.dfs_tree_recursive(tree2.root, 0);
 console.log("\n");
 console.log("---dfs tree iterative-----");
-Search.dfs_tree_iterative(tree2.root, 0);
+// Search.dfs_tree_iterative(tree2.root, 0);
 console.log("\n");
 console.log("---bfs tree iterative-----");
 Search.bfs_tree_iterative(tree2.root, 0);
