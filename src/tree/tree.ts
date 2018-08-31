@@ -4,7 +4,7 @@ import { TreeNode } from "../common/tree-node";
  * Singly Linked List
  */
 export class BinaryTree<T> {
-  private root: TreeNode<T>;
+  root: TreeNode<T>;
 
   constructor(data: any) {
     if (Array.isArray(data)) {
@@ -62,6 +62,18 @@ export class BinaryTree<T> {
       this.printPostOrderHelper(node.left);
       this.printPostOrderHelper(node.right);
       process.stdout.write(node.data + ", ");
+    }
+  }
+
+  printPreOrder(): void {
+    return this.printPreOrderHelper(this.root);
+  }
+
+  printPreOrderHelper(node: TreeNode<T>): void {
+    if (node != null) {
+      process.stdout.write(node.data + ", ");
+      this.printPreOrderHelper(node.left);
+      this.printPreOrderHelper(node.right);
     }
   }
 
