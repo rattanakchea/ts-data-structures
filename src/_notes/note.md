@@ -26,6 +26,7 @@ In in-order traversal, the result will be sorted for binary search tree.
 ## Depth first search (DFS)
 
 DFS is closely related to Pre-order traversal of a tree.
+Pre-order, In-order, Post-order are different types of DFS in binary tree.
 
 **Fun Fact**
 
