@@ -1,4 +1,5 @@
 import { V4MAPPED } from "dns";
+import { Stack } from "../stack/stack";
 
 // https://www.geeksforgeeks.org/implementation-graph-javascript/
 
@@ -55,7 +56,7 @@ class Graph<V> {
     return Array.from(this.adjList.keys());
   }
 
-  // get adjacent vetices
+  // get adjacent vertices
   edges(v: V) {
     return Array.from(this.adjList.get(v));
   }
@@ -64,26 +65,59 @@ class Graph<V> {
   bfs(staringNode: V) {}
 
   // implementation of DFS
-  dfs(staringNode: V) {
-    let visited: V[] = [];
+  dfs(startingNode: V, func: Function) {
+    // todo: handle invalid vertex
 
+    let visited: any = [];
     for (let v of this.vertices()) {
-      this._dfs(staringNode, visited);
+      visited[v] = false;
+    }
+    for (let v of this.vertices()) {
+      this._dfs(startingNode, visited, func);
     }
   }
 
   // DFS util
-  _dfs(v: V, visited: any) {
-    if (visited[v]) {
-      return;
-    }
-    process.stdout.write(v + ", ");
+  _dfs(v: V, visited: any, func: Function) {
+    if (visited[v]) return;
     visited[v] = true;
-
+    func(v);
     let edges = this.edges(v);
     for (let v of edges) {
       if (!visited[v]) {
-        this._dfs(v, visited);
+        // console.log("not visited yet ->", v);
+        this._dfs(v, visited, func);
+      }
+    }
+  }
+
+  // use a stack
+  // not handle disconnected graph if use a starting node
+  dfs_iterative(startingNode: V, func: Function) {
+    if (!this.adjList.has(startingNode)) {
+      console.error("Invalid starting node");
+      return;
+    }
+
+    let visited: any = [];
+    for (let v of this.vertices()) {
+      visited[v] = false;
+    }
+    //visited[startingNode] = true;
+    let stack = new Stack<V>();
+    stack.push(startingNode);
+
+    while (stack.size() > 0) {
+      let node = stack.pop();
+      visited[node] = true;
+      func(node);
+
+      // explore all adjacent
+      let edges = this.edges(node);
+      for (let edge of edges) {
+        if (visited[edge] == false) {
+          stack.push(edge);
+        }
       }
     }
   }
@@ -107,4 +141,14 @@ g.addEdge("E", "C");
 g.addEdge("C", "F");
 
 g.printGraph();
-g.dfs("A");
+console.log("-----all vertices", g.vertices());
+
+function print(v: any) {
+  process.stdout.write(v + ", ");
+}
+
+console.log("-----dfs recursive-------");
+g.dfs("A", print);
+console.log("\n");
+console.log("-----dfs iterative while loop-------");
+g.dfs_iterative("A", print);
