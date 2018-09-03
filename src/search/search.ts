@@ -1,6 +1,7 @@
 import { BinaryTree } from "../tree/tree";
 import { TreeNode } from "../common/tree-node";
 import { Stack } from "../stack/stack";
+import { Graph } from "../graph/graph";
 
 // similar to pre-order traversal, recursive
 // pseudocode
@@ -60,4 +61,36 @@ function bfs_tree_iterative<T>(root: TreeNode<T>, value: T) {
   }
 }
 
-export { dfs_tree_recursive, dfs_tree_iterative, bfs_tree_iterative };
+// vertex is the starting vertex for DFS
+// for adj matrix
+function dfs_graph(graph: Graph<number>, vertex: number) {
+  if (!graph.vertexExist(vertex)) {
+    console.log("vertex not found");
+  }
+  const visited = [];
+  let stack = new Stack<number>();
+  stack.push(vertex);
+
+  while (stack.size() > 0) {
+    let node = stack.pop();
+    visited[vertex] = true;
+    console.log("visit: ", vertex);
+
+    // do for every edge
+    for (let edge of graph.getEdges(vertex)) {
+      if (!visited[edge]) {
+        stack.push(edge);
+      }
+    }
+
+    // if (node.right) stack.push(node.right);
+    // if (node.left) stack.push(node.left);
+  }
+}
+
+export {
+  dfs_tree_recursive,
+  dfs_tree_iterative,
+  bfs_tree_iterative,
+  dfs_graph
+};

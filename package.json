@@ -47,5 +47,8 @@
       "json",
       "node"
     ]
+  },
+  "dependencies": {
+    "@types/es6-shim": "^0.31.37"
   }
 }

@@ -7,6 +7,7 @@ export class Stack<T> {
   pop() {
     return this.items.pop();
   }
+
   push(item: T) {
     this.items.push(item);
   }
