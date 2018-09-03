@@ -72,9 +72,7 @@ class Graph<V> {
     for (let v of this.vertices()) {
       visited[v] = false;
     }
-    for (let v of this.vertices()) {
-      this._dfs(startingNode, visited, func);
-    }
+    this._dfs(startingNode, visited, func);
   }
 
   // DFS util
@@ -83,8 +81,8 @@ class Graph<V> {
     visited[v] = true;
     func(v);
     let edges = this.edges(v);
-    for (let v of edges) {
-      if (!visited[v]) {
+    for (let edge of edges) {
+      if (!visited[edge]) {
         // console.log("not visited yet ->", v);
         this._dfs(v, visited, func);
       }
@@ -98,7 +96,6 @@ class Graph<V> {
       console.error("Invalid starting node");
       return;
     }
-
     let visited: any = [];
     for (let v of this.vertices()) {
       visited[v] = false;
@@ -115,7 +112,7 @@ class Graph<V> {
       // explore all adjacent
       let edges = this.edges(node);
       for (let edge of edges) {
-        if (visited[edge] == false) {
+        if (!visited[edge]) {
           stack.push(edge);
         }
       }
