@@ -9,7 +9,6 @@ import { Stack } from "../stack/stack";
  * E: set of edges from a vertex
  */
 
-type S = Set<number>;
 class Graph<V> {
   private adjList: Map<V, Set<V>>;
 
@@ -81,10 +80,11 @@ class Graph<V> {
     visited[v] = true;
     func(v);
     let edges = this.edges(v);
+    // console.log("edges: ", edges);
     for (let edge of edges) {
       if (!visited[edge]) {
         // console.log("not visited yet ->", v);
-        this._dfs(v, visited, func);
+        this._dfs(edge, visited, func);
       }
     }
   }
@@ -96,25 +96,22 @@ class Graph<V> {
       console.error("Invalid starting node");
       return;
     }
-    let visited: any = [];
-    for (let v of this.vertices()) {
-      visited[v] = false;
-    }
+    let visited = new Set();
+
     //visited[startingNode] = true;
     let stack = new Stack<V>();
     stack.push(startingNode);
 
     while (stack.size() > 0) {
       let node = stack.pop();
-      visited[node] = true;
+      visited.add(node);
       func(node);
 
       // explore all adjacent
       let edges = this.edges(node);
+
       for (let edge of edges) {
-        if (!visited[edge]) {
-          stack.push(edge);
-        }
+        if (!visited.has(edge)) stack.push(edge);
       }
     }
   }
@@ -147,5 +144,5 @@ function print(v: any) {
 console.log("-----dfs recursive-------");
 g.dfs("A", print);
 console.log("\n");
-console.log("-----dfs iterative while loop-------");
-g.dfs_iterative("A", print);
+//console.log("-----dfs iterative while loop-------");
+//g.dfs_iterative("A", print);
