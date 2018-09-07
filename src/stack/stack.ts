@@ -8,6 +8,10 @@ export class Stack<T> {
     return this.items.pop();
   }
 
+  addToFront(item: T) {
+    this.items.unshift(item);
+  }
+
   push(item: T) {
     this.items.push(item);
   }

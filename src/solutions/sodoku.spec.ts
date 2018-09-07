@@ -24,10 +24,10 @@ console.log("get box at row 2, col 5");
 console.log(sodoku.get_box(8, 8));
 
 console.log("find possibilities for row 1, col 0");
-console.log(sodoku.find_possiblities(1, 0));
+console.log(sodoku.find_possibilities(1, 0));
 
 console.log("find possibilities for row 2, col 3");
-console.log(sodoku.find_possiblities(2, 3));
+console.log(sodoku.find_possibilities(2, 3));
 
 console.log("test is puzzle is solved");
 console.log(sodoku.is_solved());

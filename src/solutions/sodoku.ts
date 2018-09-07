@@ -1,3 +1,5 @@
+import { Stack } from "../stack/stack";
+
 const possibilities = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 class Sodoku {
@@ -99,6 +101,42 @@ class Sodoku {
     return this.puzzle;
   }
 
+  // improved version
+  // using a stack is faster
+  // because we don't have to keep checking the one already filled
+  solve_2() {
+    // can be hard-coded to 9
+    let row_size = this.puzzle.length;
+    let col_size = this.puzzle[0].length;
+    let stack: Stack<[number, number]> = new Stack();
+
+    for (let row = 0; row < row_size; row++) {
+      for (let col = 0; col < col_size; col++) {
+        if (this.puzzle[row][col] == 0) {
+          let possibilities = this.find_possibilities(row, col);
+          // only one possibility
+          if (possibilities.length == 1) {
+            this.puzzle[row][col] = possibilities[0]; //save into the puzzle
+          } else {
+            stack.push([row, col]); //save into a stack
+          }
+        }
+      }
+    }
+
+    while (stack.size() > 0) {
+      let [row, col] = stack.pop();
+      let possibilities = this.find_possibilities(row, col);
+      if (possibilities.length == 1) {
+        this.puzzle[row][col] = possibilities[0]; //save into the puzzle
+      } else {
+        stack.addToFront([row, col]);
+      }
+    }
+
+    return this.puzzle;
+  }
+
   // check is puzzle is solved or complete
   // the puzzle is filled when there is zero in all the cells
 
@@ -134,8 +172,6 @@ class Sodoku {
         }
       }
     }
-    console.log("seem correct;");
-
     return true;
   }
 
