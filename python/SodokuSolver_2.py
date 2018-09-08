@@ -1,7 +1,9 @@
-## source: https://medium.freecodecamp.org/coming-back-to-old-problems-how-i-finally-wrote-a-sudoku-solving-algorithm-3b371e6c63bd
+# source: https://medium.freecodecamp.org/coming-back-to-old-problems-how-i-finally-wrote-a-sudoku-solving-algorithm-3b371e6c63bd
+
 
 class Cell:
     """One individual cell on the Sudoku board"""
+
     def __init__(self, column_number, row_number, number, game):
         # Whether or not to include the cell in the backtracking
         self.solved = True if number > 0 else False
@@ -20,13 +22,11 @@ class Cell:
         values = [item for item in area if item != 0]
         return len(values) == len(set(values))
 
-
     def set_number(self):
         """changes the number attribute and also changes the cell's value in the larger puzzle"""
         if not self.solved:
             self.number = self.possibilities[self.current_index]
             self.game.puzzle[self.row][self.column] = self.possibilities[self.current_index]
-
 
     def handle_one_possibility(self):
         """If the cell only has one possibility, set the cell to that value and mark it as solved"""
@@ -42,7 +42,6 @@ class Cell:
         self.possibilities = list(self.possibilities)
         self.handle_one_possibility()
 
-
     def is_valid(self):
         """checks to see if the current number is valid in its row, column, and box"""
         for unit in [self.game.get_row(self.row), self.game.get_column(self.column), self.game.get_box(self.row, self.column)]:
@@ -50,15 +49,16 @@ class Cell:
                 return False
         return True
 
-
     def increment_value(self):
         """move number to the next possibility while the current number is invalid and there are possibilities left"""
         while not self.is_valid() and self.current_index < len(self.possibilities) - 1:
             self.current_index += 1
             self.set_number()
 
+
 class SudokuSolver:
     """contains logic for solving a sudoku puzzle -- even very difficult ones using a backtracking algorithm"""
+
     def __init__(self, puzzle):
         self.puzzle = puzzle  # the 2d list of spots on the board
         self.solve_puzzle = []  # 1d list of the Cell objects
@@ -74,16 +74,13 @@ class SudokuSolver:
         """Get the full column"""
         return [row[column_number] for row in self.puzzle]
 
-
     def find_box_start(self, coordinate):
         """Get the start coordinate for the small sudoku box"""
         return coordinate // self.box_size * self.box_size
 
-
     def get_box_coordinates(self, row_number, column_number):
         """Get the numbers of the small sudoku box"""
         return self.find_box_start(column_number), self.find_box_start(row_number)
-
 
     def get_box(self, row_number, column_number):
         """Get the small sudoku box for an x and y coordinate"""
@@ -93,7 +90,6 @@ class SudokuSolver:
             box.extend(self.puzzle[i][start_y:start_y+self.box_size])
         return box
 
-
     def initialize_board(self):
         """create the Cells for each item in the puzzle and get its possibilities"""
         for row_number, row in enumerate(self.puzzle):
@@ -101,12 +97,10 @@ class SudokuSolver:
                 self.solve_puzzle.append(
                     Cell(column_number, row_number, item, self))
 
-
     def move_forward(self):
         """Move forwards to the next cell"""
         while self.backtrack_coord < len(self.solve_puzzle) - 1 and self.solve_puzzle[self.backtrack_coord].solved:
             self.backtrack_coord += 1
-
 
     def backtrack(self):
         """Move forwards to the next cell"""
@@ -114,13 +108,11 @@ class SudokuSolver:
         while self.solve_puzzle[self.backtrack_coord].solved:
             self.backtrack_coord -= 1
 
-
     def set_cell(self):
         """Set the current cell to work on"""
         cell = self.solve_puzzle[self.backtrack_coord]
         cell.set_number()
         return cell
-
 
     def reset_cell(self, cell):
         """set a cell back to zero"""
@@ -149,14 +141,40 @@ class SudokuSolver:
         cell = self.set_cell()
         cell.increment_value()
         self.change_cells(cell)
-        
+
     def run_solve(self):
         """runs the solver until we are at the end of the puzzle"""
         while self.backtrack_coord <= len(self.solve_puzzle) - 1:
             self.solve()
+
 
 def solve(puzzle):
     solver = SudokuSolver(puzzle)
     solver.initialize_board()
     solver.run_solve()
     return solver.puzzle
+
+
+puzzle = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
+          [6, 0, 0, 1, 9, 5, 0, 0, 0],
+          [0, 9, 8, 0, 0, 0, 0, 6, 0],
+          [8, 0, 0, 0, 6, 0, 0, 0, 3],
+          [4, 0, 0, 8, 0, 3, 0, 0, 1],
+          [7, 0, 0, 0, 2, 0, 0, 0, 6],
+          [0, 6, 0, 0, 0, 0, 2, 8, 0],
+          [0, 0, 0, 4, 1, 9, 0, 0, 5],
+          [0, 0, 0, 0, 8, 0, 0, 7, 9]]
+
+
+puzzle2 = [[6, 3, 4, 1, 0, 0, 5, 2, 7],
+           [0, 7, 5, 0, 3, 2, 0, 0, 0],
+           [8, 9, 0, 5, 0, 0, 0, 0, 0],
+           [3, 5, 7, 0, 8, 0, 2, 0, 0],
+           [4, 0, 8, 0, 0, 0, 7, 0, 9],
+           [0, 0, 1, 0, 2, 0, 8, 3, 4],
+           [0, 0, 0, 0, 0, 6, 0, 4, 5],
+           [0, 0, 0, 4, 7, 0, 9, 8, 0],
+           [2, 4, 3, 0, 0, 9, 1, 7, 6]]
+
+p = solve(puzzle)
+print(p)
