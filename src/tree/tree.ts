@@ -5,6 +5,7 @@ import { TreeNode } from "../common/tree-node";
 export class BinaryTree<T> {
   root: TreeNode<T>;
 
+  // input can be T or Array of T
   constructor(data: any) {
     if (Array.isArray(data)) {
       this.root = new TreeNode(data.shift()); //add first element
