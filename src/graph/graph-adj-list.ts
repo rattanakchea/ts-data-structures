@@ -1,5 +1,5 @@
-import { V4MAPPED } from "dns";
 import { Stack } from "../stack/stack";
+import { Queue } from "../queue/queue";
 
 // https://www.geeksforgeeks.org/implementation-graph-javascript/
 
@@ -61,7 +61,27 @@ class Graph<V> {
   }
 
   // implementation of BFS
-  bfs(staringNode: V) {}
+  // iterative using Queue
+  bfs_iterative(startingNode: V, func: Function) {
+    let q = new Queue<V>();
+    q.add(startingNode);
+    let visited = new Set<V>();
+
+    while (!q.isEmpty()) {
+      let node = q.dequeue();
+      if (!visited.has(node)) {
+        visited.add(node);
+        func(node); // do sth with it
+
+        // explore all adjacent nodes
+        let edges = this.edges(node);
+        for (let edge of edges) {
+          // can also omit this check, and just add to queue
+          if (!visited.has(edge)) q.add(edge);
+        }
+      }
+    }
+  }
 
   // implementation of DFS
   dfs(startingNode: V, func: Function) {
@@ -76,15 +96,15 @@ class Graph<V> {
 
   // DFS util
   _dfs(v: V, visited: any, func: Function) {
-    if (visited[v]) return;
-    visited[v] = true;
-    func(v);
-    let edges = this.edges(v);
-    // console.log("edges: ", edges);
-    for (let edge of edges) {
-      if (!visited[edge]) {
-        // console.log("not visited yet ->", v);
-        this._dfs(edge, visited, func);
+    if (!visited[v]) {
+      visited[v] = true;
+      func(v);
+      let edges = this.edges(v);
+      for (let edge of edges) {
+        if (!visited[edge]) {
+          // console.log("not visited yet ->", v);
+          this._dfs(edge, visited, func);
+        }
       }
     }
   }
@@ -107,9 +127,8 @@ class Graph<V> {
       visited.add(node);
       func(node);
 
-      // explore all adjacent
+      // explore all adjacent nodes
       let edges = this.edges(node);
-
       for (let edge of edges) {
         if (!visited.has(edge)) stack.push(edge);
       }
@@ -144,5 +163,5 @@ function print(v: any) {
 console.log("-----dfs recursive-------");
 g.dfs("A", print);
 console.log("\n");
-//console.log("-----dfs iterative while loop-------");
-//g.dfs_iterative("A", print);
+console.log("-----bfs iterative-------");
+g.bfs_iterative("A", print);

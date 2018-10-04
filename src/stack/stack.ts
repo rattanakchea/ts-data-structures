@@ -1,5 +1,4 @@
 // First In Last Out
-
 export class Stack<T> {
   items: T[] = [];
 
