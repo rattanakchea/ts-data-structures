@@ -1,8 +1,9 @@
-## from coding problem
+# from coding problem
 # Trying brute force on a sudoku board will take a really long time: we will need to try every permutation of the numbers 1-9 for all the non-empty squares.
 # Let's try using backtracking to solve this problem instead. What we can do is try filling each empty cell one by one, and backtrack once we hit an invalid state.
 # To do this, we'll need an valid_so_far function that tests the board for its validity by checking all the rows, columns, and squares. Then we'll backtrack as usual:
-X = None # Placeholder empty value
+X = None  # Placeholder empty value
+
 
 def sudoku(board):
     if is_complete(board):
@@ -19,8 +20,10 @@ def sudoku(board):
         board[r][c] = X
     return board
 
+
 def is_complete(board):
     return all(all(val is not X for val in row) for row in board)
+
 
 def find_first_empty(board):
     for i, row in enumerate(board):
@@ -28,6 +31,7 @@ def find_first_empty(board):
             if val == X:
                 return i, j
     return False
+
 
 def valid_so_far(board):
     if not rows_valid(board):
@@ -38,17 +42,20 @@ def valid_so_far(board):
         return False
     return True
 
+
 def rows_valid(board):
     for row in board:
         if duplicates(row):
             return False
     return True
 
+
 def cols_valid(board):
     for j in range(len(board[0])):
         if duplicates([board[i][j] for i in range(len(board))]):
             return False
     return True
+
 
 def blocks_valid(board):
     for i in range(0, 9, 3):
@@ -60,6 +67,7 @@ def blocks_valid(board):
             if duplicates(block):
                 return False
     return True
+
 
 def duplicates(arr):
     c = {}
