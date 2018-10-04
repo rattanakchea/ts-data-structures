@@ -1,4 +1,3 @@
-// pseudo code
 /*
 - divide the array in half
 - merge sorted array
