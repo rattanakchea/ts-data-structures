@@ -124,6 +124,23 @@ export class BinaryTree<T> {
 
   //todo: find height of a tree
   height(): number {
-    return 0;
+    return this.heightHelper(this.root);
+  }
+
+  // height is 0 by default
+  private heightHelper(node: TreeNode<T>): number {
+    if (!node) return 0;
+
+    let leftHeight = this.heightHelper(node.left);
+    let rightHeight = this.heightHelper(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
   }
 }
+
+// Test
+
+let arr: Number[] = [2, 1, 3, 4, -3, 5, 0, 6];
+let tree: BinaryTree<Number> = new BinaryTree(arr);
+tree.printSideways();
+console.log("find height of a tree:", tree.height());
